@@ -15,7 +15,7 @@ public class StorageWidget extends AppWidgetProvider {
         INTERNAL_MEMORY,
         EXTERNAL_MEMORY
     }
-    private static int PROGRESS_MAX = 10000;
+    private final static int PROGRESS_MAX = 10000;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
