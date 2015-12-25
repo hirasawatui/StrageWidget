@@ -20,7 +20,7 @@ public class StorageWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.storage_widget);
-//        views.setTextViewText(R.id.appwidget_text, widgetText);
+
         DirectoryType type = DirectoryType.EXTERNAL_MEMORY;
         long[] storage  = new long[3];
         boolean isStorageGetSuccess = getStorageByte(type, storage);
@@ -41,8 +41,8 @@ public class StorageWidget extends AppWidgetProvider {
             memMessage = "no data";
         }
 
-        views.setTextViewText(R.id.textView, memMessage);
-        views.setOnClickPendingIntent(R.id.textView, onClickText(context));
+        views.setTextViewText(R.id.storage_text, memMessage);
+        views.setOnClickPendingIntent(R.id.storage_text, onClickText(context));
         views.setProgressBar(R.id.storage_progress, PROGRESS_MAX, (int) usedPercentage, false);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
