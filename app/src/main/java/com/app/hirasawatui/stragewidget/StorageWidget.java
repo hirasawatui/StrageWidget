@@ -15,6 +15,7 @@ public class StorageWidget extends AppWidgetProvider {
         INTERNAL_MEMORY,
         EXTERNAL_MEMORY
     }
+    private static int PROGRESS_MAX = 10000;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -26,11 +27,19 @@ public class StorageWidget extends AppWidgetProvider {
         String memMessage = "";
 
         if (isStorageGetSuccess) {
-            memMessage = "total:" + Long.toString((storage[0] / 1024 / 1024)) + "MB\n" +
-                    "used:" +  Long.toString((storage[1] / 1024 / 1024)) + "MB\n" +
-                    "free:" + Long.toString((storage[2] / 1024 / 1024)) + "MB\n";
+            long total = (storage[0] / 1024 / 1024);
+            long used =(storage[1] / 1024 / 1024);
+            long free =(storage[2] / 1024 / 1024);
+
+            memMessage = "total:" + Long.toString(total) + "MB\n" +
+                    "used:" +  Long.toString(used) + "MB\n" +
+                    "free:" + Long.toString(free) + "MB\n";
+
+            long usedPercentage = (used * PROGRESS_MAX) / total ;
+            views.setProgressBar(R.id.storage_progress, PROGRESS_MAX, (int)usedPercentage, false);
         } else {
             memMessage = "no data";
+            views.setProgressBar(R.id.storage_progress, PROGRESS_MAX, 0, false);
         }
 
         views.setTextViewText(R.id.textView, memMessage);
