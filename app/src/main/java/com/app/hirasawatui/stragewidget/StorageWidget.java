@@ -25,6 +25,7 @@ public class StorageWidget extends AppWidgetProvider {
         long[] storage  = new long[3];
         boolean isStorageGetSuccess = getStorageByte(type, storage);
         String memMessage = "";
+        long usedPercentage = 0;
 
         if (isStorageGetSuccess) {
             long total = (storage[0] / 1024 / 1024);
@@ -35,15 +36,14 @@ public class StorageWidget extends AppWidgetProvider {
                     "used:" +  Long.toString(used) + "MB\n" +
                     "free:" + Long.toString(free) + "MB\n";
 
-            long usedPercentage = (used * PROGRESS_MAX) / total ;
-            views.setProgressBar(R.id.storage_progress, PROGRESS_MAX, (int)usedPercentage, false);
+            usedPercentage = (used * PROGRESS_MAX) / total;
         } else {
             memMessage = "no data";
-            views.setProgressBar(R.id.storage_progress, PROGRESS_MAX, 0, false);
         }
 
         views.setTextViewText(R.id.textView, memMessage);
         views.setOnClickPendingIntent(R.id.textView, onClickText(context));
+        views.setProgressBar(R.id.storage_progress, PROGRESS_MAX, (int) usedPercentage, false);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
